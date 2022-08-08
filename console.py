@@ -19,27 +19,26 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 class HBNBCommand(cmd.Cmd):
     """ HBNH console """
-    prompt = '(hbnb) '
-    
+    prompt = '(hbnb)'
+
     def do_EOF(self, arg):
         """Exits console"""
         return True
-    
+
     def emptyline(self):
         """ overwriting the emptyline method """
         return False
-    
+
     def do_quit(self, arg):
         """Quit command to exit the program"""
         return True
-    
+
     def do_create(self, arg):
         """Creates a new instance of a class"""
         args = shlex.split(arg)
         if len(args) == 0:
             print("** class name missing **")
             return False
-        
         if args[0] in classes:
             instance = classes[args[0]]()
         else:
@@ -47,7 +46,7 @@ class HBNBCommand(cmd.Cmd):
             return False
         print(instance.id)
         instance.save()
-        
+
     def do_show(self, arg):
         """Prints an instance as a string based on the class and id"""
         args = shlex.split(arg)
@@ -65,7 +64,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** instance id missing **")
         else:
             print("** class doesn't exist **")
-            
+
     def do_destroy(self, arg):
         """Deletes an instance based on the class and id"""
         args = shlex.split(arg)
@@ -83,7 +82,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** instance id missing **")
         else:
             print("** class doesn't exist **")
-            
+
     def do_all(self, arg):
         """Prints string representations of instances"""
         args = shlex.split(arg)
@@ -96,14 +95,14 @@ class HBNBCommand(cmd.Cmd):
             print("]")
         elif args[0] in classes:
             for key in models.storage.all():
-                if args[0] in key:                    
+                if args[0] in key:
                     obj_list.append(str(models.storage.all()[key]))
             print("[", end="")
             print(", ".join(obj_list), end="")
             print("]")
         else:
             print("** class doesn't exist **")
-            
+
     def do_update(self, arg):
         """Update an instance based on the class name, id, attribute & value"""
         args = shlex.split(arg)
@@ -122,13 +121,13 @@ class HBNBCommand(cmd.Cmd):
                                 if args[2] in integers:
                                     try:
                                         args[3] = int(args[3])
-                                    except:
+                                    except args[3].DoesNotExist:
                                         args[3] = 0
                                 elif args[2] in floats:
                                     try:
                                         args[3] = float(args[3])
-                                    except:
-                                            args[3] = 0.0
+                                    except args[3].DoesNotExist:
+                                        args[3] = 0.0
                             setattr(models.storage.all()[k], args[2], args[3])
                             models.storage.all()[k].save()
                         else:
@@ -142,5 +141,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class doesn't exist **")
 
+
 if __name__ == '__main__':
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                HBNBCommand().cmdloop()
+    HBNBCommand().cmdloop()
